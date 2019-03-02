@@ -1,0 +1,10 @@
+{
+  "name": "prepare-commit-id",
+  "version": "0.0.1",
+  "description": "Git hook to extract ID from branch name into commit message",
+  "repository": "https://github.com/ljpengelen/prepare-commit-id",
+  "author": "Luc Engelen",
+  "license": "MIT",
+  "private": false,
+  "bin": "cli.js"
+}
