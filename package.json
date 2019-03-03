@@ -1,10 +1,11 @@
 {
   "name": "prefix-commit-message",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Git hook to extract ID from branch name into commit message",
   "repository": "https://github.com/ljpengelen/prefix-commit-message",
   "author": "Luc Engelen",
   "license": "MIT",
   "private": false,
-  "bin": "cli.js"
+  "bin": "cli.js",
+  "keywords": ["git", "hook", "hooks", "prepare-commit-msg", "jira", "pivotal", "tracker"]
 }
