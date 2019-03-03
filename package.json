@@ -1,8 +1,8 @@
 {
-  "name": "prepare-commit-id",
+  "name": "prefix-commit-message",
   "version": "0.0.1",
   "description": "Git hook to extract ID from branch name into commit message",
-  "repository": "https://github.com/ljpengelen/prepare-commit-id",
+  "repository": "https://github.com/ljpengelen/prefix-commit-message",
   "author": "Luc Engelen",
   "license": "MIT",
   "private": false,
