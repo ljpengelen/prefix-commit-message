@@ -25,7 +25,7 @@ if (!identifier) {
 
 const commitMessageFile = process.argv[2];
 if (!commitMessageFile) {
-  console.error(scriptName + " requires the name of the file containing the commit log message as first argument.");
+  console.error(`${scriptName} requires the name of the file containing the commit log message as first argument.`);
   process.exit(1);
 }
 
