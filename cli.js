@@ -2,23 +2,41 @@
 
 const childProcess = require("child_process");
 const fs = require("fs");
+const path = require("path");
 
 const scriptName = "prepare-commit-id";
 
-let symbolicRef;
-try {
-  symbolicRef = childProcess.execSync("git symbolic-ref --short HEAD").toString().trim();
-} catch (e) {
-  console.error(scriptName + " doesn't work without Git.");
+const pathToHead = folder => path.resolve(path.join(folder, ".git", "HEAD"));
+const pathToParentFolder = folder => path.resolve(path.join(folder, ".."));
+const isRepositoryRoot = folder => fs.existsSync(pathToHead(folder));
+
+let repositoryRoot = __dirname;
+while (!isRepositoryRoot(repositoryRoot) && fs.existsSync(repositoryRoot)) {
+  repositoryRoot = pathToParentFolder(repositoryRoot);
+}
+
+if (!fs.existsSync(repositoryRoot)) {
+  console.error(`${scriptName} was unable to find the root of the Git repository.`);
   process.exit(1);
 }
 
-const match = symbolicRef.match(/[^/]*\/(([A-Z]*-)?[0-9]*).*/);
-if (!match) {
+const head = fs.readFileSync(pathToHead(repositoryRoot)).toString();
+const branchNameMatch = head.match(/^ref: refs\/heads\/(.*)/);
+if (!branchNameMatch) {
   process.exit();
 }
 
-const identifier = match[1];
+const branchName = branchNameMatch[1];
+if (!branchName) {
+  process.exit();
+}
+
+const identifierMatch = branchName.match(/[^/]*\/(([A-Z]*-)?[0-9]*).*/);
+if (!identifierMatch) {
+  process.exit();
+}
+
+const identifier = identifierMatch[1];
 if (!identifier) {
   process.exit();
 }
