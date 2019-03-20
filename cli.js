@@ -47,9 +47,11 @@ if (!commitMessageFile) {
   process.exit(1);
 }
 
-const content = fs.readFileSync(commitMessageFile);
+const pathToCommitMessageFile = path.resolve(path.join(repositoryRoot, commitMessageFile));
+
+const content = fs.readFileSync(pathToCommitMessageFile);
 const prefix = "[ " + identifier + " ] ";
 
 if (content.indexOf(prefix) === -1) {
-  fs.writeFileSync(commitMessageFile, prefix + content);
+  fs.writeFileSync(pathToCommitMessageFile, prefix + content);
 }
