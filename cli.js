@@ -41,9 +41,15 @@ if (!identifier) {
   process.exit();
 }
 
-const commitMessageFile = process.argv[2];
+const huskyGitParams = process.env.HUSKY_GIT_PARAMS;
+if (!huskyGitParams) {
+  console.error(`${scriptName} expects Git parameters to be accessible via HUSKY_GIT_PARAMS.`);
+  process.exit(1);
+}
+
+const commitMessageFile = huskyGitParams.split(" ")[0];
 if (!commitMessageFile) {
-  console.error(`${scriptName} requires the name of the file containing the commit log message as first argument.`);
+  console.error(`${scriptName} requires HUSKY_GIT_PARAMS to contain the name of the file containing the commit log message.`);
   process.exit(1);
 }
 
