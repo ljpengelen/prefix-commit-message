@@ -4,7 +4,7 @@ const childProcess = require("child_process");
 const fs = require("fs");
 const path = require("path");
 
-const scriptName = "prepare-commit-id";
+const scriptName = "prefix-commit-message";
 
 const pathToHead = folder => path.resolve(path.join(folder, ".git", "HEAD"));
 const pathToParentFolder = folder => path.resolve(path.join(folder, ".."));
