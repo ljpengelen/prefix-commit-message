@@ -7,5 +7,13 @@
   "license": "MIT",
   "private": false,
   "bin": "cli.js",
-  "keywords": ["git", "hook", "hooks", "prepare-commit-msg", "jira", "pivotal", "tracker"]
+  "keywords": [
+    "git",
+    "hook",
+    "hooks",
+    "prepare-commit-msg",
+    "jira",
+    "pivotal",
+    "tracker"
+  ]
 }
