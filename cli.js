@@ -16,7 +16,9 @@ while (!isRepositoryRoot(repositoryRoot) && fs.existsSync(repositoryRoot)) {
 }
 
 if (!fs.existsSync(repositoryRoot)) {
-  console.error(`${scriptName} was unable to find the root of the Git repository.`);
+  console.error(
+    `${scriptName} was unable to find the root of the Git repository.`
+  );
   process.exit(1);
 }
 
@@ -43,20 +45,31 @@ if (!identifier) {
 
 const huskyGitParams = process.env.HUSKY_GIT_PARAMS;
 if (!huskyGitParams) {
-  console.error(`${scriptName} expects Git parameters to be accessible via HUSKY_GIT_PARAMS.`);
+  console.error(
+    `${scriptName} expects Git parameters to be accessible via HUSKY_GIT_PARAMS.`
+  );
   process.exit(1);
 }
 
 const commitMessageFile = huskyGitParams.split(" ")[0];
 if (!commitMessageFile) {
-  console.error(`${scriptName} requires HUSKY_GIT_PARAMS to contain the name of the file containing the commit log message.`);
+  console.error(
+    `${scriptName} requires HUSKY_GIT_PARAMS to contain the name of the file containing the commit log message.`
+  );
   process.exit(1);
 }
 
-const pathToCommitMessageFile = path.resolve(path.join(repositoryRoot, commitMessageFile));
+const pathToCommitMessageFile = path.resolve(
+  path.join(repositoryRoot, commitMessageFile)
+);
 
 const content = fs.readFileSync(pathToCommitMessageFile);
-const prefix = "[ " + identifier + " ] ";
+
+let prefix = "[ " + identifier + " ] ";
+
+if (process.argv[2]) {
+  prefix = eval(process.argv[2]);
+}
 
 if (content.indexOf(prefix) === -1) {
   fs.writeFileSync(pathToCommitMessageFile, prefix + content);
