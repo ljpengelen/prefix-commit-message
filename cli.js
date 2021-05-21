@@ -55,9 +55,18 @@ if (!commitMessageFile) {
 
 const pathToCommitMessageFile = path.resolve(path.join(repositoryRoot, commitMessageFile));
 
-const content = fs.readFileSync(pathToCommitMessageFile);
-const prefix = "[ " + identifier + " ] ";
+let opening = "[ ";
+if (process.argv[2] !== undefined) {
+  opening = process.argv[2];
+}
 
+let closing = " ]";
+if (process.argv[3] !== undefined) {
+  closing = process.argv[3];
+}
+const prefix = opening + identifier + closing + " ";
+
+const content = fs.readFileSync(pathToCommitMessageFile);
 if (content.indexOf(prefix) === -1) {
   fs.writeFileSync(pathToCommitMessageFile, prefix + content);
 }
