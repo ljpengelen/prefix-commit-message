@@ -31,3 +31,18 @@ Finally, add the following to `package.json`:
     }
   }
 ```
+
+## Custom prefix
+
+If you don't like the square brackets around the identifier, you can supply a custom opening and closing symbol.
+For example,
+
+```
+"husky": {
+    "hooks": {
+      "prepare-commit-msg": "prefix-commit-message '' ':'"
+    }
+  }
+```
+
+will result in the prefix `JIRA-874: `.
