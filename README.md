@@ -13,6 +13,21 @@ If you're using an older Husky, see (https://github.com/ljpengelen/prefix-commit
 
 ## Installation
 
+### Standalone usage
+
+First, install this script:
+
+```
+npm install prefix-commit-message --save-dev
+```
+
+Then, navigate to `.git/hooks` from the root of your repository and create an executable file named `prepare-commit-msg` with the following content:
+
+```
+#!/bin/sh
+npx prefix-commit-message $1
+```
+
 ### Usage with Husky
 
 First, install [Husky](https://github.com/typicode/husky) and this script:
@@ -38,6 +53,13 @@ npx husky add .husky/prepare-commit-msg "npx prefix-commit-message \$1"
 
 If you don't like the square brackets around the identifier, you can supply a custom opening and closing symbol.
 For example,
+
+```
+#!/bin/sh
+npx prefix-commit-message $1 '' ':'
+```
+
+and
 
 ```
 npx husky add .husky/prepare-commit-msg "npx prefix-commit-message \$1 '' ':'"
