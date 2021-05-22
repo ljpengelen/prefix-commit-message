@@ -17,6 +17,6 @@
     "tracker"
   ],
   "peerDependencies": {
-    "husky": "< 5"
+    "husky": ">= 6"
   }
 }
