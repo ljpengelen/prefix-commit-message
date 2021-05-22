@@ -41,28 +41,26 @@ if (!identifier) {
   process.exit();
 }
 
-const huskyGitParams = process.env.HUSKY_GIT_PARAMS;
-if (!huskyGitParams) {
-  console.error(`${scriptName} expects Git parameters to be accessible via HUSKY_GIT_PARAMS.`);
-  process.exit(1);
-}
-
-const commitMessageFile = huskyGitParams.split(" ")[0];
+const commitMessageFile = process.argv[2];
 if (!commitMessageFile) {
-  console.error(`${scriptName} requires HUSKY_GIT_PARAMS to contain the name of the file containing the commit log message.`);
+  console.error(`${scriptName} requires the name of the file containing the commit log message as first argument.`);
   process.exit(1);
 }
 
 const pathToCommitMessageFile = path.resolve(path.join(repositoryRoot, commitMessageFile));
+if (!fs.existsSync(pathToCommitMessageFile)) {
+  console.error(`${pathToCommitMessageFile} is not a file.`)
+  process.exit(1);
+}
 
 let opening = "[ ";
-if (process.argv[2] !== undefined) {
-  opening = process.argv[2];
+if (process.argv[3] !== undefined) {
+  opening = process.argv[3];
 }
 
 let closing = " ]";
-if (process.argv[3] !== undefined) {
-  closing = process.argv[3];
+if (process.argv[4] !== undefined) {
+  closing = process.argv[4];
 }
 const prefix = opening + identifier + closing + " ";
 
