@@ -10,7 +10,7 @@ const pathToHead = folder => path.resolve(path.join(folder, ".git", "HEAD"));
 const pathToParentFolder = folder => path.resolve(path.join(folder, ".."));
 const isRepositoryRoot = folder => fs.existsSync(pathToHead(folder));
 
-let repositoryRoot = __dirname;
+let repositoryRoot = process.cwd();
 while (!isRepositoryRoot(repositoryRoot) && fs.existsSync(repositoryRoot)) {
   repositoryRoot = pathToParentFolder(repositoryRoot);
 }
