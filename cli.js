@@ -54,14 +54,22 @@ if (!fs.existsSync(pathToCommitMessageFile)) {
 }
 
 let opening = "[ ";
-if (process.argv[3] !== undefined) {
-  opening = process.argv[3];
+let closing = " ]";
+
+const args = process.argv.slice(3);
+for (let i = 0; i < args.length; ++i) {
+  let next = args[i + 1];
+  if (!next || next.startsWith("-")) {
+    next = '';
+  }
+  if (args[i] === "-o") {
+    opening = next;
+  }
+  if (args[i] === "-c") {
+    closing = next;
+  }
 }
 
-let closing = " ]";
-if (process.argv[4] !== undefined) {
-  closing = process.argv[4];
-}
 const prefix = opening + identifier + closing + " ";
 
 const content = fs.readFileSync(pathToCommitMessageFile);

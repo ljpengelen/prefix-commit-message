@@ -56,13 +56,16 @@ For example,
 
 ```
 #!/bin/sh
-npx prefix-commit-message $1 '' ':'
+npx prefix-commit-message $1 -o -c :
 ```
 
 and
 
 ```
-npx husky add .husky/prepare-commit-msg "npx prefix-commit-message \$1 '' ':'"
+npx husky add .husky/prepare-commit-msg "npx prefix-commit-message \$1 -o -c :"
 ```
 
 will result in the prefix `JIRA-874: `.
+
+The opening symbol is specified via the '-o' flag, and the closing symbol is specified via the '-c' flag.
+As the example shows, the empty string is used when no value is specified after a flag.
