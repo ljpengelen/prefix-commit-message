@@ -15,8 +15,5 @@
     "jira",
     "pivotal",
     "tracker"
-  ],
-  "peerDependencies": {
-    "husky": ">= 6"
-  }
+  ]
 }
