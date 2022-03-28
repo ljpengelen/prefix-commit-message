@@ -15,13 +15,7 @@ If you're using an older Husky, see (https://github.com/ljpengelen/prefix-commit
 
 ### Standalone usage
 
-First, install this script:
-
-```
-npm install prefix-commit-message --save-dev
-```
-
-Then, navigate to `.git/hooks` from the root of your repository and create an executable file named `prepare-commit-msg` with the following content:
+Navigate to `.git/hooks` from the root of your Git repository and create an executable file named `prepare-commit-msg` with the following content:
 
 ```
 #!/bin/sh
