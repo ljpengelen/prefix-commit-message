@@ -31,7 +31,7 @@ if (!branchName) {
   process.exit();
 }
 
-const identifierMatch = branchName.match(/[^/]*\/(([a-zA-Z]*-)?[0-9]*).*/);
+const identifierMatch = branchName.match(/[^/]*\/(([a-zA-Z0-9]*-)?[0-9]*).*/);
 if (!identifierMatch) {
   process.exit();
 }
