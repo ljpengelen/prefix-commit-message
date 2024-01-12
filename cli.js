@@ -6,6 +6,38 @@ const path = require("path");
 
 const scriptName = "prefix-commit-message";
 
+function customSymbol(value) {
+  if (!value) return "";
+  if (value.startsWith("-")) return "";
+
+  return value;
+}
+
+const configuration = {
+  opening: "[ ",
+  closing: " ]",
+  includeBranchPattern: null,
+  excludeBranchPattern: null
+};
+
+const args = process.argv.slice(3);
+for (let i = 1; i <= args.length; ++i) {
+  let previous = args[i - 1];
+  let current = args[i];
+  if (previous === "-o") {
+    configuration.opening = customSymbol(current);
+  }
+  if (previous === "-c") {
+    configuration.closing = customSymbol(current);
+  }
+  if (previous === "-bi") {
+    configuration.includeBranchPattern = current;
+  }
+  if (previous === "-be") {
+    configuration.excludeBranchPattern = current;
+  }
+}
+
 const pathToHead = folder => path.resolve(path.join(folder, ".git", "HEAD"));
 const pathToParentFolder = folder => path.resolve(path.join(folder, ".."));
 const isRepositoryRoot = folder => fs.existsSync(pathToHead(folder));
@@ -41,6 +73,14 @@ if (!identifier) {
   process.exit();
 }
 
+if (configuration.includeBranchPattern && !branchName.match(configuration.includeBranchPattern)) {
+  process.exit();
+}
+
+if (configuration.excludeBranchPattern && branchName.match(configuration.excludeBranchPattern)) {
+  process.exit();
+}
+
 const commitMessageFile = process.argv[2];
 if (!commitMessageFile) {
   console.error(`${scriptName} requires the name of the file containing the commit log message as first argument.`);
@@ -53,24 +93,7 @@ if (!fs.existsSync(pathToCommitMessageFile)) {
   process.exit(1);
 }
 
-let opening = "[ ";
-let closing = " ]";
-
-const args = process.argv.slice(3);
-for (let i = 0; i < args.length; ++i) {
-  let next = args[i + 1];
-  if (!next || next.startsWith("-")) {
-    next = '';
-  }
-  if (args[i] === "-o") {
-    opening = next;
-  }
-  if (args[i] === "-c") {
-    closing = next;
-  }
-}
-
-const prefix = opening + identifier + closing + " ";
+const prefix = configuration.opening + identifier + configuration.closing + " ";
 
 const content = fs.readFileSync(pathToCommitMessageFile);
 if (content.indexOf(prefix) === -1) {
