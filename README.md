@@ -63,3 +63,24 @@ will result in the prefix `JIRA-874: `.
 
 The opening symbol is specified via the '-o' flag, and the closing symbol is specified via the '-c' flag.
 As the example shows, the empty string is used when no value is specified after a flag.
+
+## Including and excluding branches
+
+If you want to apply the hook to specific branches only, you can supply a regex pattern for branches to include and exclude.
+For example,
+
+```
+#!/bin/sh
+npx prefix-commit-message $1 -bi ^feature -be release
+```
+
+and
+
+```
+npx husky add .husky/prepare-commit-msg "npx prefix-commit-message \$1 -bi ^feature -be release"
+```
+
+will only extract the identifier from branches that start with the string "feature" and do not contain the string "release".
+
+The pattern for branches to include is specified via the '-bi' flag,
+and the pattern for branches to exclude is specified via the '-be' flag.
