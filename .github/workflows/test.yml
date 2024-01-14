@@ -13,4 +13,5 @@ jobs:
       with:
         node-version: 21
         cache: 'npm'
+    - run: npm install
     - run: npm test
