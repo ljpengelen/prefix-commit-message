@@ -43,13 +43,13 @@ const pathToParentFolder = folder => path.resolve(path.join(folder, ".."));
 const isRepositoryRoot = folder => fs.existsSync(pathToHead(folder));
 
 let repositoryRoot = process.cwd();
-while (!isRepositoryRoot(repositoryRoot) && fs.existsSync(repositoryRoot)) {
-  repositoryRoot = pathToParentFolder(repositoryRoot);
-}
-
-if (!fs.existsSync(repositoryRoot)) {
-  console.error(`${scriptName} was unable to find the root of the Git repository.`);
-  process.exit(1);
+while (!isRepositoryRoot(repositoryRoot)) {
+  const parent = pathToParentFolder(repositoryRoot);
+  if (parent == repositoryRoot) {
+    console.error(`${scriptName} was unable to find the root of the Git repository.`);
+    process.exit(1);
+  }
+  repositoryRoot = parent;
 }
 
 const head = fs.readFileSync(pathToHead(repositoryRoot)).toString();
