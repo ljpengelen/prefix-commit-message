@@ -15,5 +15,12 @@
     "jira",
     "pivotal",
     "tracker"
-  ]
+  ],
+  "devDependencies": {
+    "chai": "^5.0.0",
+    "mocha": "^10.2.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  }
 }
