@@ -21,6 +21,7 @@
     "mocha": "^10.2.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "ci": "mocha --reporter=xunit --reporter-option output=test-results.xml"
   }
 }
