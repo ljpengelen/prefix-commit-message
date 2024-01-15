@@ -14,4 +14,8 @@ jobs:
         node-version: 21
         cache: 'npm'
     - run: npm install
-    - run: npm test
+    - run: npm run ci
+    - uses: ljpengelen/junit-xml-action@main
+      if: always()
+      with:
+        files: "test-results.xml"
