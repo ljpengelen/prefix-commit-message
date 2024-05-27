@@ -17,7 +17,8 @@ const configuration = {
   opening: "[ ",
   closing: " ]",
   includeBranchPattern: null,
-  excludeBranchPattern: null
+  excludeBranchPattern: null,
+  customBranchMatchPattern: null
 };
 
 const args = process.argv.slice(3);
@@ -35,6 +36,10 @@ for (let i = 1; i <= args.length; ++i) {
   }
   if (previous === "-be") {
     configuration.excludeBranchPattern = current;
+  }
+
+  if (previous === "-br") {
+    configuration.customBranchMatchPattern = current;
   }
 }
 
@@ -63,7 +68,7 @@ if (!branchName) {
   process.exit();
 }
 
-const identifierMatch = branchName.match(/[^/]*\/(([a-zA-Z0-9]*-)?[0-9]+).*/);
+const identifierMatch = branchName.match(configuration.customBranchMatchPattern ? new RegExp(configuration.customBranchMatchPattern.replaceAll(/^\/|\/$/g, '')): /[^/]*\/(([a-zA-Z0-9]*-)?[0-9]+).*/);
 if (!identifierMatch) {
   process.exit();
 }
@@ -99,3 +104,4 @@ const content = fs.readFileSync(pathToCommitMessageFile);
 if (content.indexOf(prefix) === -1) {
   fs.writeFileSync(pathToCommitMessageFile, prefix + content);
 }
+
